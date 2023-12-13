@@ -149,7 +149,7 @@ Nodo *ingresarNodoLibro(Nodo *listaLibros)
     libro->siguiente = NULL;
 
     while(busquedaBinaria(listaLibros,libro->nombre) != NULL){
-        printf("Libro ya registrado anteriormente!\n\n");
+        printf("Libro registrado anteriormente!\n\n");
         free(libro->nombre);
         libro->nombre = leerCadena("Ingrese un titulo de libro no registrado: ");
     }
@@ -252,7 +252,7 @@ void agregarDevolucion(Nodo *usuario, Nodo *libro)
                 }
 
                 // Liberar la memoria de la arista de préstamo
-                free(prestamoUsuario);
+                
                 // Crear una nueva arista para la devolución del libro
                 Arista *nuevaAristaLibro = (Arista *)malloc(sizeof(Arista));
                 nuevaAristaLibro->data.devolucion = nuevaAristaUsuario->data.devolucion;
