@@ -1,3 +1,5 @@
+#ifndef OPERACIONESESTRUCTURAS_H
+#define OPERACIONESESTRUCTURAS_H
 #include "tiposDatos.h"
 #include "otrasFunciones.h"
 #include <stdio.h>
@@ -7,16 +9,20 @@ int idPrestamo = 1000;
 int idDevolucion = 10000;
 int idLibro = 1;
 int idUsuario = 100;
-int generarIdPrestamo() {
+int generarIdPrestamo()
+{
     return idPrestamo++;
 }
-int generarIdDevolucion() {
+int generarIdDevolucion()
+{
     return idDevolucion++;
 }
-int generarIdLibro() {
+int generarIdLibro()
+{
     return idLibro++;
 }
-int generarIdUsuario() {
+int generarIdUsuario()
+{
     return idUsuario++;
 }
 void agregarArista(Nodo *nodo, Arista *nuevaArista)
@@ -50,16 +56,16 @@ void agregarPrestamo(Nodo *libro, Nodo *usuario, Prestamo prestamo)
         // Agregar arista al libro
         agregarArista(libro, nuevaAristaLibro);
         libro->stock--;
-        printf("Pr%cstamo registrado con %cxito. Stock actualizado.\n",130,130);
+        printf("Pr%cstamo registrado con %cxito. Stock actualizado.\n", 130, 130);
     }
     else
     {
-        printf("Error: No hay libros disponibles para pr%cstamo.\n",130);
+        printf("Error: No hay libros disponibles para pr%cstamo.\n", 130);
     }
 }
 void imprimirAristas(Nodo *nodo)
 {
-    printf("Aristas del nodo %d (%s)", nodo->id, nodo->nombre);
+    printf("Aristas del nodo %d [ %s ]", nodo->id, nodo->nombre);
     if (nodo->tipo == LIBRO)
     {
         printf(" - Stock: %d", nodo->stock);
@@ -72,13 +78,13 @@ void imprimirAristas(Nodo *nodo)
         {
             if (actual->tipo == 0)
             {
-                printf("  Pr%cstamo ID: %d, Libro ID: %d, Usuario ID: %d\n",130,
+                printf("  Pr%cstamo ID: %d, Libro ID: %d, Usuario ID: %d\n", 130,
                        actual->data.prestamo.id, actual->data.prestamo.id_libro, actual->data.prestamo.id_usuario);
             }
             else
             {
-                printf("  Devoluci%cn ID: %d, Pr%cstamo ID: %d, Libro ID: %d\n",162,
-                       actual->data.devolucion.id,130, actual->data.devolucion.id_prestamo, actual->data.devolucion.id_libro);
+                printf("  Devoluci%cn ID: %d, Pr%cstamo ID: %d, Libro ID: %d\n", 162,
+                       actual->data.devolucion.id, 130, actual->data.devolucion.id_prestamo, actual->data.devolucion.id_libro);
             }
             actual = actual->siguiente;
         }
@@ -160,7 +166,7 @@ void realizarPrestamo(Nodo *listaLibros, Nodo *listaUsuarios)
     }
     if (libro == NULL || libro->stock <= 0)
     {
-        printf("Error: No se encontr%c el libro o no hay stock disponible.\n",162);
+        printf("Error: No se encontr%c el libro o no hay stock disponible.\n", 162);
         return;
     }
 
@@ -176,7 +182,7 @@ void realizarPrestamo(Nodo *listaLibros, Nodo *listaUsuarios)
     }
     if (usuario == NULL)
     {
-        printf("Error: No se encontr%c el usuario.\n",162);
+        printf("Error: No se encontr%c el usuario.\n", 162);
         return;
     }
     Prestamo prestamo;
@@ -228,7 +234,7 @@ void agregarDevolucion(Nodo *usuario, Nodo *libro)
                 // Agregar arista al libro
                 agregarArista(libro, nuevaAristaLibro);
                 libro->stock++;
-                printf("Devoluci%cn registrada con %cxito. Stock actualizado.\n",162,130);
+                printf("Devoluci%cn registrada con %cxito. Stock actualizado.\n", 162, 130);
                 return;
             }
             prevPrestamoUsuario = prestamoUsuario;
@@ -253,10 +259,10 @@ void realizarDevolucion(Nodo *listaUsuarios, Nodo *listaLibros)
     }
     if (usuario == NULL)
     {
-        printf("Error: No se encontr%c el usuario.\n",162);
+        printf("Error: No se encontr%c el usuario.\n", 162);
         return;
     }
-    
+
     idLibro = leerNum("Ingrese el ID del libro a devolver: ");
     Nodo *libro = listaLibros;
     while (libro != NULL)
@@ -269,8 +275,9 @@ void realizarDevolucion(Nodo *listaUsuarios, Nodo *listaLibros)
     }
     if (libro == NULL)
     {
-        printf("Error: No se encontr%c el libro.\n",162);
+        printf("Error: No se encontr%c el libro.\n", 162);
         return;
     }
     agregarDevolucion(usuario, libro);
 }
+#endif

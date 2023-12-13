@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "OperacionesEstructuras.h"
 #include "tiposDatos.h"
 #include "otrasFunciones.h"
 #include <string.h>
@@ -32,12 +33,12 @@ void splitLista(Nodo *lista, Nodo **listaIzquierda, Nodo **listaDerecha)
         lento->siguiente = NULL;
     }
 }
-// Función de comparación para ordenar los libros por título
-int compararLibros(const void *a, const void *b)
+// Función de comparación para ordenar los NodoB por título
+int compararNodos(const void *a, const void *b)
 {
-    Nodo *libroA = *(Nodo **)a;
-    Nodo *libroB = *(Nodo **)b;
-    return strcmp(libroA->nombre, libroB->nombre);
+    Nodo *NodoA = *(Nodo **)a;
+    Nodo *NodoB = *(Nodo **)b;
+    return strcmp(NodoA->nombre, NodoB->nombre);
 }
 
 // Función para mezclar dos listas ordenadas
@@ -50,7 +51,7 @@ Nodo *mergeListas(Nodo *listaIzquierda, Nodo *listaDerecha)
 
     Nodo *resultado = NULL;
 
-    if (compararLibros(&listaIzquierda, &listaDerecha) <= 0)
+    if (compararNodos(&listaIzquierda, &listaDerecha) <= 0)
     {
         resultado = listaIzquierda;
         resultado->siguiente = mergeListas(listaIzquierda->siguiente, listaDerecha);
@@ -63,70 +64,91 @@ Nodo *mergeListas(Nodo *listaIzquierda, Nodo *listaDerecha)
 
     return resultado;
 }
-// Función para ordenar la lista de libros usando Merge Sort
-void mergeSort(Nodo **listaLibros)
+// Función para ordenar la lista usando Merge Sort
+void mergeSort(Nodo **lista)
 {
-    if (*listaLibros == NULL || (*listaLibros)->siguiente == NULL)
+    if (*lista == NULL || (*lista)->siguiente == NULL)
     {
         return; // La lista ya está ordenada o vacía
     }
 
     Nodo *listaIzquierda = NULL;
     Nodo *listaDerecha = NULL;
-    splitLista(*listaLibros, &listaIzquierda, &listaDerecha);
+    splitLista(*lista, &listaIzquierda, &listaDerecha);
 
     mergeSort(&listaIzquierda);
     mergeSort(&listaDerecha);
 
-    *listaLibros = mergeListas(listaIzquierda, listaDerecha);
+    *lista = mergeListas(listaIzquierda, listaDerecha);
 }
 
-Nodo* busquedaBinariaPorNombre(Nodo* cabeza, const char* valorBuscado) {
-    Nodo* inicio = cabeza;
-    Nodo* fin = NULL;
+Nodo *busquedaBinaria(Nodo *cabeza, const char *valorBuscado)
+{
+    Nodo *inicio = cabeza;
+    Nodo *fin = NULL;
 
-    while (inicio != fin) {
+    while (inicio != fin)
+    {
         // Encontrar el punto medio
-        Nodo* medio = inicio;
-        Nodo* rapido = inicio->siguiente;
-        while (rapido != fin) {
+        Nodo *medio = inicio;
+        Nodo *rapido = inicio->siguiente;
+        while (rapido != fin)
+        {
             rapido = rapido->siguiente;
-            if (rapido != fin) {
+            if (rapido != fin)
+            {
                 medio = medio->siguiente;
                 rapido = rapido->siguiente;
             }
         }
 
         // Verificar si el valor buscado está en el medio
-        if (strcmp(medio->nombre, valorBuscado) == 0) {
-            return medio;  // Se encontró el valor, devuelve el puntero al nodo
-        } else if (strcmp(medio->nombre, valorBuscado) < 0) {
+        if (strcmp(medio->nombre, valorBuscado) == 0)
+        {
+            return medio; // Se encontró el valor, devuelve el puntero al nodo
+        }
+        else if (strcmp(medio->nombre, valorBuscado) < 0)
+        {
             inicio = medio->siguiente;
-        } else {
+        }
+        else
+        {
             fin = medio;
         }
     }
 
-    return NULL;  // No se encontró el valor, devuelve NULL
+    return NULL; // No se encontró el valor, devuelve NULL
 }
 
-void realizarBusqueda(Nodo *listaLibros)
+void realizarBusqueda(Nodo *lista)
 {
-    char* nombreBuscado;
+    char *nombreBuscado;
     nombreBuscado = leerCadena("Ingrese el nombre a buscar: ");
 
-    // Llamar a la función de búsqueda binaria por nombre
-    Nodo *libroEncontrado = busquedaBinariaPorNombre(listaLibros, nombreBuscado);
+    // Llamar a la función de búsqueda binaria
+    Nodo *resultado = busquedaBinaria(lista, nombreBuscado);
 
-    // Verificar si se encontró el libro
-    if (libroEncontrado != NULL)
+    // Verificar si se encontró resultado
+    if (resultado != NULL)
     {
-        printf("Libro encontrado:\n");
-        printf("ID: %d\n", libroEncontrado->id);
-        printf("Nombre: %s\n", libroEncontrado->nombre);
+        imprimirAristas(resultado);
+        /*if (resultado->tipo == USUARIO)
+        {
+            printf("Usuario encontrado:\n");
+
+            //printf("ID    : %d\n", resultado->id);
+            //printf("Nombre: %s\n", resultado->nombre);
+        }
+        else
+        {
+            printf("Libro encontrado:\n");
+            printf("ID    : %d\n", resultado->id);
+            printf("Titulo: %s\n", resultado->nombre);
+            printf("Stock : %d\n", resultado->stock);
+        }*/
     }
     else
     {
-        printf("Libro no encontrado.\n");
+        printf("Busqueda sin resultados.\n");
     }
 }
