@@ -1,0 +1,2 @@
+PARA EJECUTAR EL PROGRAMA EN SISTEMAS LINUX / MACOS 
+EJECUTAR EL ARCHIVO ejecutar.sh ubicado en la carpeta raíz 
