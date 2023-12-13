@@ -81,38 +81,33 @@ void mergeSort(Nodo **listaLibros)
     *listaLibros = mergeListas(listaIzquierda, listaDerecha);
 }
 
-Nodo *busquedaBinariaPorNombre(Nodo *listaLibros, char *nombreBuscado)
-{
-    Nodo *izquierda = listaLibros;
-    Nodo *derecha = NULL;
+Nodo* busquedaBinariaPorNombre(Nodo* cabeza, const char* valorBuscado) {
+    Nodo* inicio = cabeza;
+    Nodo* fin = NULL;
 
-    while (izquierda != NULL)
-    {
-        // Encontrar el final de la lista
-        derecha = izquierda;
-        while (derecha->siguiente != NULL)
-        {
-            derecha = derecha->siguiente;
+    while (inicio != fin) {
+        // Encontrar el punto medio
+        Nodo* medio = inicio;
+        Nodo* rapido = inicio->siguiente;
+        while (rapido != fin) {
+            rapido = rapido->siguiente;
+            if (rapido != fin) {
+                medio = medio->siguiente;
+                rapido = rapido->siguiente;
+            }
         }
 
-        Nodo *mitad = izquierda;
-        int comparacion = strcmp(mitad->nombre, nombreBuscado);
-
-        if (comparacion == 0)
-        {
-            return mitad; // Se encontró el libro con el nombre buscado
-        }
-        else if (comparacion > 0)
-        {
-            derecha = mitad;
-        }
-        else
-        {
-            izquierda = mitad->siguiente;
+        // Verificar si el valor buscado está en el medio
+        if (strcmp(medio->nombre, valorBuscado) == 0) {
+            return medio;  // Se encontró el valor, devuelve el puntero al nodo
+        } else if (strcmp(medio->nombre, valorBuscado) < 0) {
+            inicio = medio->siguiente;
+        } else {
+            fin = medio;
         }
     }
 
-    return NULL; // No se encontró el libro con el nombre buscado
+    return NULL;  // No se encontró el valor, devuelve NULL
 }
 
 void realizarBusqueda(Nodo *listaLibros)

@@ -6,7 +6,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+// Función para limpiar la pantalla en sistemas POSIX (Linux, macOS)
+void limpiarPantallaPOSIX() {
+    printf("\033[2J\033[H");
+}
 
+// Función para limpiar la pantalla en sistemas Windows
+void limpiarPantallaWindows() {
+    system("cls");
+}
+
+// Función para limpiar la pantalla de manera portable
+void limpiarPantalla() {
+#if defined(_WIN32) || defined(_WIN64)
+    limpiarPantallaWindows();
+#else
+    limpiarPantallaPOSIX();
+#endif
+}
 char* leerCadena(char* mensaje) {
     char* chain = NULL;
     char c; 
@@ -128,6 +145,7 @@ void imprimirDescripcion() {
     printf("|_____________________________________________________________|\n");
 
     while(leerNum("Presione 0  para volver al menu principal...") != 0);
+    limpiarPantalla();
 }
 
 

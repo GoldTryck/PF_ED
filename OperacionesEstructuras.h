@@ -2,24 +2,6 @@
 #include "otrasFunciones.h"
 #include <stdio.h>
 #include <stdlib.h>
-// Función para limpiar la pantalla en sistemas POSIX (Linux, macOS)
-void limpiarPantallaPOSIX() {
-    printf("\033[2J\033[H");
-}
-
-// Función para limpiar la pantalla en sistemas Windows
-void limpiarPantallaWindows() {
-    system("cls");
-}
-
-// Función para limpiar la pantalla de manera portable
-void limpiarPantalla() {
-#if defined(_WIN32) || defined(_WIN64)
-    limpiarPantallaWindows();
-#else
-    limpiarPantallaPOSIX();
-#endif
-}
 // Definición de variables globales para contar los IDs
 int idPrestamo = 1000;
 int idDevolucion = 10000;
