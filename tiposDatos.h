@@ -20,7 +20,7 @@ typedef struct Devolucion {
 
 typedef struct Nodo {
     int id;
-    char nombre[100];
+    char* nombre;
     TipoNodo tipo;
     int stock;
     struct ListaAristas *aristas;

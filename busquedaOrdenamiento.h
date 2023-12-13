@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tiposDatos.h"
+#include "otrasFunciones.h"
 #include <string.h>
 // Función para dividir la lista en dos mitades
 void splitLista(Nodo *lista, Nodo **listaIzquierda, Nodo **listaDerecha)
@@ -116,9 +117,8 @@ Nodo *busquedaBinariaPorNombre(Nodo *listaLibros, char *nombreBuscado)
 
 void realizarBusqueda(Nodo *listaLibros)
 {
-    char nombreBuscado[100];
-    printf("Ingrese el nombre a buscar: ");
-    scanf("%s", nombreBuscado);
+    char* nombreBuscado;
+    nombreBuscado = leerCadena("Ingrese el nombre a buscar: ");
 
     // Llamar a la función de búsqueda binaria por nombre
     Nodo *libroEncontrado = busquedaBinariaPorNombre(listaLibros, nombreBuscado);

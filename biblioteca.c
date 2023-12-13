@@ -3,34 +3,26 @@
 #include "busquedaOrdenamiento.h"
 #include "tiposDatos.h"
 #include "OperacionesEstructuras.h"
+#include "otrasFunciones.h"
 // Definición de variables globales para contar los IDs
 int main()
 {
-    //system("cls");
+    limpiarPantalla();
     Nodo *listaLibros = NULL;
     Nodo *listaUsuarios = NULL;
     int opcion;
     char busqueda[100];
     do
     {
-        printf("\n--- Men%c ---\n",163);
-        printf("1. Ingresar libro\n");
-        printf("2. Ingresar usuario\n");
-        printf("3. Realizar pr%cstamo\n",130);
-        printf("4. Realizar devoluci%cn\n",162);
-        printf("5. Imprimir aristas\n");
-        printf("6. Ordenar usuarios por nombre\n");
-        printf("7. Ordenar libros por titulo\n");
-        printf("8. Buscar usuario por nombre\n");
-        printf("9. Buscar libro por titulo\n");
-        printf("0. Salir\n");
-        printf("Ingrese su opci%cn: ",162);
-        scanf("%d", &opcion);
+        printf("\n");
+        imprimirMenu();
+        opcion = leerNum("> ");
         switch (opcion)
         {
         case 1:
             // Ingresar libro
             {
+                limpiarPantalla();
                 Nodo *libro = ingresarNodoLibro();
                 libro->siguiente = listaLibros;
                 listaLibros = libro;
@@ -39,6 +31,7 @@ int main()
         case 2:
             // Ingresar usuario
             {
+                limpiarPantalla();
                 Nodo *usuario = ingresarNodoUsuario();
                 usuario->siguiente = listaUsuarios;
                 listaUsuarios = usuario;
@@ -46,15 +39,18 @@ int main()
             break;
         case 3:
             // Realizar pr%cstamo
+            limpiarPantalla();
             realizarPrestamo(listaLibros, listaUsuarios);
             break;
         case 4:
             // Realizar devolución
+            limpiarPantalla();
             realizarDevolucion(listaUsuarios, listaLibros);
             break;
         case 5:
             // Imprimir aristas
             {
+                limpiarPantalla();
                 Nodo *libro = listaLibros;
                 while (libro != NULL)
                 {
@@ -71,18 +67,27 @@ int main()
             break;
         case 6:
             //ordenar usuarios
+            limpiarPantalla();
             mergeSort(&listaUsuarios);
             break;
         case 7:
+            limpiarPantalla();
             mergeSort(&listaLibros);
             break;
         case 8:
+            limpiarPantalla();
             mergeSort(&listaUsuarios);
             realizarBusqueda(listaUsuarios);
             break;
         case 9:
+        limpiarPantalla();
             mergeSort(&listaLibros);
             realizarBusqueda(listaLibros);
+            break;
+        case 10:
+            limpiarPantalla();
+            imprimirDescripcion();
+            break;
         case 0:
             // Salir
             break;

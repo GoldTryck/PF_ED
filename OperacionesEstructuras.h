@@ -1,6 +1,25 @@
 #include "tiposDatos.h"
+#include "otrasFunciones.h"
 #include <stdio.h>
 #include <stdlib.h>
+// Función para limpiar la pantalla en sistemas POSIX (Linux, macOS)
+void limpiarPantallaPOSIX() {
+    printf("\033[2J\033[H");
+}
+
+// Función para limpiar la pantalla en sistemas Windows
+void limpiarPantallaWindows() {
+    system("cls");
+}
+
+// Función para limpiar la pantalla de manera portable
+void limpiarPantalla() {
+#if defined(_WIN32) || defined(_WIN64)
+    limpiarPantallaWindows();
+#else
+    limpiarPantallaPOSIX();
+#endif
+}
 // Definición de variables globales para contar los IDs
 int idPrestamo = 1000;
 int idDevolucion = 10000;
@@ -121,13 +140,12 @@ Nodo *ingresarNodoLibro()
         exit(EXIT_FAILURE);
     }
     libro->id = generarIdLibro();
-    printf("Ingrese el nombre del libro: ");
-    scanf("%s", libro->nombre);
-    printf("Ingrese el stock del libro: ");
-    scanf("%d", &libro->stock);
+    libro->nombre = leerCadena("Ingrese el titulo del libro: ");
+    libro->stock = leerNum("Ingrese el stock del libro: ");
     libro->tipo = LIBRO;
     libro->aristas = NULL;
     libro->siguiente = NULL;
+    printf("Libro registrado exitosamente.");
     return libro;
 }
 Nodo *ingresarNodoUsuario()
@@ -139,8 +157,7 @@ Nodo *ingresarNodoUsuario()
         exit(EXIT_FAILURE);
     }
     usuario->id = generarIdUsuario();
-    printf("Ingrese el nombre del usuario: ");
-    scanf("%s", usuario->nombre);
+    usuario->nombre = leerCadena("Ingrese el nombre del usuario: ");
     usuario->tipo = USUARIO;
     usuario->aristas = NULL;
     usuario->siguiente = NULL;
@@ -149,8 +166,7 @@ Nodo *ingresarNodoUsuario()
 void realizarPrestamo(Nodo *listaLibros, Nodo *listaUsuarios)
 {
     int idLibro, idUsuario;
-    printf("Ingrese el ID del libro a prestar: ");
-    scanf("%d", &idLibro);
+    idLibro = leerNum("Ingrese el ID del libro a prestar: ");
     Nodo *libro = listaLibros;
     while (libro != NULL)
     {
@@ -165,8 +181,8 @@ void realizarPrestamo(Nodo *listaLibros, Nodo *listaUsuarios)
         printf("Error: No se encontr%c el libro o no hay stock disponible.\n",162);
         return;
     }
-    printf("Ingrese el ID del usuario que realiza el pr%cstamo: ",130);
-    scanf("%d", &idUsuario);
+
+    idUsuario = leerNum("Ingrese el ID del usuario: ");
     Nodo *usuario = listaUsuarios;
     while (usuario != NULL)
     {
@@ -243,8 +259,7 @@ void agregarDevolucion(Nodo *usuario, Nodo *libro)
 void realizarDevolucion(Nodo *listaUsuarios, Nodo *listaLibros)
 {
     int idUsuario, idLibro;
-    printf("Ingrese el ID del usuario que realiza la devoluci%cn: ",162);
-    scanf("%d", &idUsuario);
+    idUsuario = leerNum("Ingrese el ID del usuario : ");
     Nodo *usuario = listaUsuarios;
     while (usuario != NULL)
     {
@@ -259,8 +274,8 @@ void realizarDevolucion(Nodo *listaUsuarios, Nodo *listaLibros)
         printf("Error: No se encontr%c el usuario.\n",162);
         return;
     }
-    printf("Ingrese el ID del libro que se est%c devolviendo: ",160);
-    scanf("%d", &idLibro);
+    
+    idLibro = leerNum("Ingrese el ID del libro a devolver: ");
     Nodo *libro = listaLibros;
     while (libro != NULL)
     {
