@@ -95,30 +95,41 @@ void imprimirAristas(Nodo *nodo)
     }
     printf("\n");
 }
-void liberarAristas(Arista *aristas)
+// Función para liberar una lista de aristas
+void liberarAristas(ListaAristas *listaAristas)
 {
-    while (aristas != NULL)
+    Arista *actual = listaAristas->primera;
+    while (actual != NULL)
     {
-        Arista *siguiente = aristas->siguiente;
-        free(aristas);
-        aristas = siguiente;
+        Arista *siguiente = actual->siguiente;
+        free(actual);
+        actual = siguiente;
     }
 }
+
+// Función para liberar un nodo y sus aristas asociadas
 void liberarNodo(Nodo *nodo)
 {
-    free(nodo->aristas);
+    // Liberar el campo nombre del nodo
+    free(nodo->nombre);
+    // Liberar todas las aristas del nodo
+    liberarAristas(nodo->aristas);
+    // Liberar el nodo
     free(nodo);
 }
+
+// Función para liberar una lista de nodos
 void liberarLista(Nodo *lista)
 {
     while (lista != NULL)
     {
         Nodo *siguiente = lista->siguiente;
-        liberarAristas(lista->aristas);
+        // Liberar el nodo y sus aristas asociadas
         liberarNodo(lista);
         lista = siguiente;
     }
 }
+
 Nodo *ingresarNodoLibro()
 {
     Nodo *libro = (Nodo *)malloc(sizeof(Nodo));
