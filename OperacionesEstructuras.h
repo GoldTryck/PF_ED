@@ -1,9 +1,12 @@
 #ifndef OPERACIONESESTRUCTURAS_H
 #define OPERACIONESESTRUCTURAS_H
+#include "busquedaOrdenamiento.h"
 #include "tiposDatos.h"
 #include "otrasFunciones.h"
+#include "OperacionesEstructuras.h"
 #include <stdio.h>
 #include <stdlib.h>
+Nodo *busquedaBinaria(Nodo *cabeza, const char *valorBuscado);
 // Definición de variables globales para contar los IDs
 int idPrestamo = 1000;
 int idDevolucion = 10000;
@@ -130,7 +133,7 @@ void liberarLista(Nodo *lista)
     }
 }
 
-Nodo *ingresarNodoLibro()
+Nodo *ingresarNodoLibro(Nodo *listaLibros)
 {
     Nodo *libro = (Nodo *)malloc(sizeof(Nodo));
     if (libro == NULL)
@@ -144,10 +147,16 @@ Nodo *ingresarNodoLibro()
     libro->tipo = LIBRO;
     libro->aristas = NULL;
     libro->siguiente = NULL;
+
+    while(busquedaBinaria(listaLibros,libro->nombre) != NULL){
+        printf("Libro ya registrado anteriormente!\n\n");
+        free(libro->nombre);
+        libro->nombre = leerCadena("Ingrese un titulo de libro no registrado: ");
+    }
     printf("Libro registrado exitosamente.");
     return libro;
 }
-Nodo *ingresarNodoUsuario()
+Nodo *ingresarNodoUsuario(Nodo *listaUsuarios)
 {
     Nodo *usuario = (Nodo *)malloc(sizeof(Nodo));
     if (usuario == NULL)
@@ -160,6 +169,13 @@ Nodo *ingresarNodoUsuario()
     usuario->tipo = USUARIO;
     usuario->aristas = NULL;
     usuario->siguiente = NULL;
+
+    while(busquedaBinaria(listaUsuarios,usuario->nombre) != NULL){
+        printf("Usuario ya registrado anteriormente!\n\n");
+        free(usuario->nombre);
+        usuario->nombre = leerCadena("Ingrese nombre de usuario no registrado: ");
+    }
+    printf("Registro de usuario exitoso!\n\n");
     return usuario;
 }
 void realizarPrestamo(Nodo *listaLibros, Nodo *listaUsuarios)

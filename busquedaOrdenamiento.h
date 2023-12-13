@@ -1,3 +1,5 @@
+#ifndef BUSQUEDA_ORDENAMIETNO_H
+#define BUSQUEDA_ORDENAMIETNO_H
 #include <stdio.h>
 #include <stdlib.h>
 #include "OperacionesEstructuras.h"
@@ -152,3 +154,5 @@ void realizarBusqueda(Nodo *lista)
         printf("Busqueda sin resultados.\n");
     }
 }
+
+#endif
