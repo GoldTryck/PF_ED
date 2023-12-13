@@ -148,7 +148,8 @@ Nodo *ingresarNodoLibro(Nodo *listaLibros)
     libro->aristas = NULL;
     libro->siguiente = NULL;
 
-    while(busquedaBinaria(listaLibros,libro->nombre) != NULL){
+    while (busquedaBinaria(listaLibros, libro->nombre) != NULL)
+    {
         printf("Libro registrado anteriormente!\n\n");
         free(libro->nombre);
         libro->nombre = leerCadena("Ingrese un titulo de libro no registrado: ");
@@ -170,7 +171,8 @@ Nodo *ingresarNodoUsuario(Nodo *listaUsuarios)
     usuario->aristas = NULL;
     usuario->siguiente = NULL;
 
-    while(busquedaBinaria(listaUsuarios,usuario->nombre) != NULL){
+    while (busquedaBinaria(listaUsuarios, usuario->nombre) != NULL)
+    {
         printf("Usuario ya registrado anteriormente!\n\n");
         free(usuario->nombre);
         usuario->nombre = leerCadena("Ingrese nombre de usuario no registrado: ");
@@ -240,19 +242,7 @@ void agregarDevolucion(Nodo *usuario, Nodo *libro)
                 nuevaAristaUsuario->siguiente = NULL;
                 // Agregar arista al usuario
                 agregarArista(usuario, nuevaAristaUsuario);
-                // Eliminar la arista de préstamo del usuario
-                if (prevPrestamoUsuario == NULL)
-                {
-                    // La arista de préstamo es la primera en la lista
-                    usuario->aristas->primera = prestamoUsuario->siguiente;
-                }
-                else
-                {
-                    prevPrestamoUsuario->siguiente = prestamoUsuario->siguiente;
-                }
 
-                // Liberar la memoria de la arista de préstamo
-                
                 // Crear una nueva arista para la devolución del libro
                 Arista *nuevaAristaLibro = (Arista *)malloc(sizeof(Arista));
                 nuevaAristaLibro->data.devolucion = nuevaAristaUsuario->data.devolucion;
